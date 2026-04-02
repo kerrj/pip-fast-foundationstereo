@@ -7,7 +7,7 @@ name = "fast-foundation-stereo"
 version = "0.1.0"
 description = "Fast Foundation Stereo: lightweight stereo disparity estimation (pip-installable fork)"
 readme = "readme.md"
-license = "NVIDIA Source Code License-NC"
+license = {text = "NVIDIA Source Code License-NC"}
 requires-python = ">=3.10"
 dependencies = [
     "torch>=2.0",
