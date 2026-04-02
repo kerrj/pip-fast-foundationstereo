@@ -29,7 +29,8 @@ sys.modules['core.foundation_stereo'] = sys.modules['fast_foundation_stereo.foun
 sys.modules['core.geometry'] = sys.modules['fast_foundation_stereo.geometry']
 sys.modules['core.utils'] = sys.modules['fast_foundation_stereo.utils']
 sys.modules['core.utils.utils'] = sys.modules['fast_foundation_stereo.utils.utils']
-sys.modules['core.distill_block'] = sys.modules.get('fast_foundation_stereo.distill_block')
+import fast_foundation_stereo.distill_block  # eagerly import so it's in sys.modules
+sys.modules['core.distill_block'] = sys.modules['fast_foundation_stereo.distill_block']
 sys.modules['foundation_stereo_ori'] = _pkg
 sys.modules['foundation_stereo_ori.submodule'] = sys.modules['fast_foundation_stereo.submodule']
 sys.modules['foundation_stereo_ori.extractor'] = sys.modules['fast_foundation_stereo.extractor']
