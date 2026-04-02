@@ -1,11 +1,6 @@
-import os, sys, torch, imageio, logging, importlib, argparse
+import torch, logging, importlib
 import cv2
 import numpy as np
-import yaml
-try:
-  import open3d as o3d
-except:
-  o3d = None
 
 AMP_DTYPE = torch.float16
 
@@ -23,19 +18,6 @@ def set_seed(random_seed):
   torch.cuda.manual_seed_all(random_seed)
   torch.backends.cudnn.deterministic = True
   torch.backends.cudnn.benchmark = False
-
-
-def toOpen3dCloud(points,colors=None,normals=None):
-  cloud = o3d.geometry.PointCloud()
-  cloud.points = o3d.utility.Vector3dVector(points.astype(np.float64))
-  if colors is not None:
-    if colors.max()>1:
-      colors = colors/255.0
-    cloud.colors = o3d.utility.Vector3dVector(colors.astype(np.float64))
-  if normals is not None:
-    cloud.normals = o3d.utility.Vector3dVector(normals.astype(np.float64))
-  return cloud
-
 
 
 def depth2xyzmap(depth:np.ndarray, K, uvs:np.ndarray=None, zmin=0.1):

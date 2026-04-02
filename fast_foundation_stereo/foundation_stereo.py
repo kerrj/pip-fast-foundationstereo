@@ -3,27 +3,39 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 import sys,os
-code_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(f'{code_dir}/../')
-from core.update import BasicSelectiveMultiUpdateBlock
-from core.extractor import ContextNetSharedBackbone, Feature
-from core.geometry import Combined_Geo_Encoding_Volume
-from core.submodule import (
+from fast_foundation_stereo.update import BasicSelectiveMultiUpdateBlock
+from fast_foundation_stereo.extractor import ContextNetSharedBackbone, Feature
+from fast_foundation_stereo.geometry import Combined_Geo_Encoding_Volume
+from fast_foundation_stereo.submodule import (
     BasicConv, Conv3dNormActReduced, ResnetBasicBlock3D, BasicConv_IN, Conv2x,
     FeatureAtt, CostVolumeDisparityAttention, SpatialAttentionExtractor,
     ChannelAttentionEnhancement, disparity_regression, context_upsample,
     build_gwc_volume_optimized_pytorch1, build_gwc_volume_triton,
     build_concat_volume_optimized_pytorch1, build_concat_volume_optimized_pytorch,
 )
-from core.utils.utils import InputPadder
-import Utils as U
+from fast_foundation_stereo.utils.utils import InputPadder
+from fast_foundation_stereo import top_utils as U
 import time
 
-sys.modules['foundation_stereo_ori'] = sys.modules['core']
-sys.modules['foundation_stereo_ori.submodule'] = sys.modules['core.submodule']
-sys.modules['foundation_stereo_ori.extractor'] = sys.modules['core.extractor']
-sys.modules['foundation_stereo_ori.update'] = sys.modules['core.update']
-sys.modules['foundation_stereo_ori.foundation_stereo'] = sys.modules['core.foundation_stereo']
+# Module aliases for unpickling serialized checkpoints saved with original paths.
+# The checkpoints use torch.save(model) (full pickle), so Python needs to resolve
+# the original module paths (core.*, foundation_stereo_ori.*, Utils) at load time.
+import fast_foundation_stereo as _pkg
+sys.modules['core'] = _pkg
+sys.modules['core.submodule'] = sys.modules['fast_foundation_stereo.submodule']
+sys.modules['core.extractor'] = sys.modules['fast_foundation_stereo.extractor']
+sys.modules['core.update'] = sys.modules['fast_foundation_stereo.update']
+sys.modules['core.foundation_stereo'] = sys.modules['fast_foundation_stereo.foundation_stereo']
+sys.modules['core.geometry'] = sys.modules['fast_foundation_stereo.geometry']
+sys.modules['core.utils'] = sys.modules['fast_foundation_stereo.utils']
+sys.modules['core.utils.utils'] = sys.modules['fast_foundation_stereo.utils.utils']
+sys.modules['core.distill_block'] = sys.modules.get('fast_foundation_stereo.distill_block')
+sys.modules['foundation_stereo_ori'] = _pkg
+sys.modules['foundation_stereo_ori.submodule'] = sys.modules['fast_foundation_stereo.submodule']
+sys.modules['foundation_stereo_ori.extractor'] = sys.modules['fast_foundation_stereo.extractor']
+sys.modules['foundation_stereo_ori.update'] = sys.modules['fast_foundation_stereo.update']
+sys.modules['foundation_stereo_ori.foundation_stereo'] = sys.modules['fast_foundation_stereo.foundation_stereo']
+sys.modules['Utils'] = sys.modules['fast_foundation_stereo.top_utils']
 class FoundationStereo(nn.Module):
   pass
 

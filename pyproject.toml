@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "fast-foundation-stereo"
+version = "0.1.0"
+description = "Fast Foundation Stereo: lightweight stereo disparity estimation (pip-installable fork)"
+readme = "readme.md"
+license = "NVIDIA Source Code License-NC"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.0",
+    "timm",
+    "einops",
+    "omegaconf",
+    "scipy",
+    "numpy",
+    "scikit-image",
+    "opencv-contrib-python",
+    "imageio",
+    "pyyaml",
+]
+
+[tool.setuptools.packages.find]
+include = ["fast_foundation_stereo*"]

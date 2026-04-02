@@ -2,10 +2,8 @@ import torch,pdb,os,sys
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-code_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(f'{code_dir}/../')
-from Utils import AMP_DTYPE
-import Utils as U
+from fast_foundation_stereo.top_utils import AMP_DTYPE
+from fast_foundation_stereo import top_utils as U
 try:
   import triton
   import triton.language as tl
